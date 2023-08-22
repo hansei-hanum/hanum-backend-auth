@@ -13,6 +13,19 @@ message AuthorizeRequest {
 message AuthorizeResult {
     bool success = 1;
     optional AuthError error = 2;
+    optional UserData data = 3;
+}
+
+message UserData {
+    string name = 1;
+    string email = 2;
+    string phone = 3;
+    string avatar = 4;
+    string token = 5;
+    string role = 6;
+    string status = 7;
+    string created_at = 8;
+    string updated_at = 9;
 }
 
 enum AuthError {
