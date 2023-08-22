@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+    rpc Authorize(AuthorizeRequest) returns (AuthorizeResult) {}
+}
+
+message AuthorizeRequest {
+    string token = 1;
+}
+
+message AuthorizeResult {
+    bool success = 1;
+    optional AuthError error = 2;
+}
+
+enum AuthError {
+    INVAILD_TOKEN = 0;
+    ACCOUNT_BLOCKED = 1;
+}
