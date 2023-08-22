@@ -14,6 +14,7 @@ message AuthorizeResult {
     bool success = 1;
     optional AuthError error = 2;
     optional UserData data = 3;
+    
 }
 
 message UserData {
