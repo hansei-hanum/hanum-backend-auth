@@ -1,7 +1,6 @@
-.DS_Store
-__pycache__
-firebase-cred.json
 *.env
-.env
-venv
 env/.env
+__pycache__/
+venv
+.DS_Store
+firebase-cred.json
