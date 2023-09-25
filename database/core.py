@@ -8,8 +8,8 @@ Base = declarative_base()
 
 engine = create_async_engine(
     f"mysql+aiomysql://{DatabaseEnv.USERNAME}:{DatabaseEnv.PASSWORD}@{DatabaseEnv.HOST}:{DatabaseEnv.PORT}/{DatabaseEnv.DATABASE}",
-    pool_size=10,
-    max_overflow=60,
+    pool_size=1,
+    max_overflow=10,
     pool_pre_ping=True,
     echo=False,
     connect_args={"charset": "utf8mb4"},
