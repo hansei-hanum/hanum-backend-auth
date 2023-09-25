@@ -25,11 +25,11 @@ async def default_callback(request: Request, response: Response, pexpire: int):
 
 
 async def default_identifier(request: Request):
-    if not Env.DEBUG:
-        forwarded = request.headers.get("X-Forwarded-For")
-        if forwarded:
-            return forwarded.split(",")[0]
-        return request.client.host + ":" + request.scope["path"]
+    # if not Env.DEBUG:
+    #     forwarded = request.headers.get("X-Forwarded-For")
+    #     if forwarded:
+    #         return forwarded.split(",")[0]
+    #     return request.client.host + ":" + request.scope["path"]
 
     return f"DEBUG_{random_string(32)}"
 
