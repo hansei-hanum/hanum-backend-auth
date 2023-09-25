@@ -19,12 +19,34 @@ class AuthServiceStub(object):
             request_serializer=auth__pb2.AuthorizeRequest.SerializeToString,
             response_deserializer=auth__pb2.AuthorizeResult.FromString,
         )
+        self.GetUser = channel.unary_unary(
+            "/auth.AuthService/GetUser",
+            request_serializer=auth__pb2.GetUserRequest.SerializeToString,
+            response_deserializer=auth__pb2.GetUserResult.FromString,
+        )
+        self.SendPush = channel.unary_unary(
+            "/auth.AuthService/SendPush",
+            request_serializer=auth__pb2.SendPushRequest.SerializeToString,
+            response_deserializer=auth__pb2.SendPushResult.FromString,
+        )
 
 
 class AuthServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Authorize(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
+    def GetUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
+    def SendPush(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
@@ -37,6 +59,16 @@ def add_AuthServiceServicer_to_server(servicer, server):
             servicer.Authorize,
             request_deserializer=auth__pb2.AuthorizeRequest.FromString,
             response_serializer=auth__pb2.AuthorizeResult.SerializeToString,
+        ),
+        "GetUser": grpc.unary_unary_rpc_method_handler(
+            servicer.GetUser,
+            request_deserializer=auth__pb2.GetUserRequest.FromString,
+            response_serializer=auth__pb2.GetUserResult.SerializeToString,
+        ),
+        "SendPush": grpc.unary_unary_rpc_method_handler(
+            servicer.SendPush,
+            request_deserializer=auth__pb2.SendPushRequest.FromString,
+            response_serializer=auth__pb2.SendPushResult.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -68,6 +100,64 @@ class AuthService(object):
             "/auth.AuthService/Authorize",
             auth__pb2.AuthorizeRequest.SerializeToString,
             auth__pb2.AuthorizeResult.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
+
+    @staticmethod
+    def GetUser(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/auth.AuthService/GetUser",
+            auth__pb2.GetUserRequest.SerializeToString,
+            auth__pb2.GetUserResult.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
+
+    @staticmethod
+    def SendPush(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/auth.AuthService/SendPush",
+            auth__pb2.SendPushRequest.SerializeToString,
+            auth__pb2.SendPushResult.FromString,
             options,
             channel_credentials,
             insecure,

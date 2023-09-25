@@ -1,9 +1,12 @@
-from ..declaration.auth_pb2 import AuthorizeRequest, AuthorizeResult, AuthError
-from ..declaration import auth_pb2_grpc
+from auth import AuthService
+from ..declaration.auth_pb2 import (
+    AuthorizeResult,
+)
 
 
-class AuthorizeServicer(auth_pb2_grpc.AuthServiceServicer):
-    async def Authorize(self, request, context):
-        if request.token == "test":
-            return AuthorizeResult(success=True)
-        return AuthorizeResult(success=False, error=AuthError.INVAILD_TOKEN)
+async def AuthorizeInterface(self, request, context):
+    result = await AuthService.authorize(request.token)
+    if result:
+        return AuthorizeResult(success=True, userid=result)
+    else:
+        return AuthorizeResult(success=False)
