@@ -30,7 +30,7 @@ async def get_user(req: VerificationRequest, authid: int = Depends(RequireAuth))
         if key.user_id:
             raise HTTPException(status_code=409, detail="KEY_ALREADY_USED")
 
-        if key.valid_until < datetime.now():
+        if key.valid_until is not None and key.valid_until < datetime.now():
             raise HTTPException(status_code=409, detail="KEY_EXPIRED")
 
         key.user_id = user.id
