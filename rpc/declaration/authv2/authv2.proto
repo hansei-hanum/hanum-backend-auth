@@ -1,6 +1,9 @@
 syntax = "proto3";
 
-package auth;
+package authv2;
+
+// Just a Csharp namespace :D
+option csharp_namespace = "Hanum.Core.Protos.Authv2";
 
 service AuthService {
     rpc Authorize(AuthorizeRequest) returns (AuthorizeResult) {}

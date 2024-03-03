@@ -11,13 +11,16 @@ from database.verification import VerificationKey
 
 class UserVerification(NamedTuple):
     type: Literal["STUDENT", "TEACHER", "GRADUATED"]
-    department: Literal[
-        "CLOUD_SECURITY",
-        "NETWORK_SECURITY",
-        "HACKING_SECURITY",
-        "METAVERSE_GAME",
-        "GAME",
-    ] | None = None
+    department: (
+        Literal[
+            "CLOUD_SECURITY",
+            "NETWORK_SECURITY",
+            "HACKING_SECURITY",
+            "METAVERSE_GAME",
+            "GAME",
+        ]
+        | None
+    ) = None
     grade: int | None = None
     classroom: int | None = None
     number: int | None = None
@@ -109,6 +112,27 @@ class UserService:
         data["verification"] = verification._asdict() if verification else None
 
         return data
+
+    async def set_handle(self, handle: str) -> bool | float:
+        if (
+            await self.sess.execute(select(User).where(User.handle == handle))
+        ).scalar_one_or_none():
+            return False
+
+        change_available_after = (
+            self.user.handle_updated_at + timedelta(days=30)
+            if self.user.handle_updated_at
+            else datetime.now()
+        )
+
+        if change_available_after > datetime.now():
+            return (change_available_after - datetime.now()).total_seconds()
+
+        self.user.handle_updated_at = datetime.now()
+        self.user.handle = handle
+        await self.sess.commit()
+
+        return True
 
     async def delete(self) -> None:
         await self.sess.delete(self.user)

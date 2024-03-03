@@ -40,7 +40,6 @@ typing_extensions==4.8.0
 unpaddedbase64==2.1.0
 urllib3==1.26.16
 uvicorn==0.23.2
-uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
 yarl==1.9.2

@@ -1,6 +1,6 @@
 from sqlalchemy import select, delete
 from database import FCMToken
-from ..declaration.auth_pb2 import (
+from rpc.declaration.auth.auth_pb2 import (
     SendPushResult,
 )
 from database import scope
