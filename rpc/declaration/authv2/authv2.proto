@@ -5,10 +5,16 @@ package authv2;
 // Just a Csharp namespace :D
 option csharp_namespace = "Hanum.Core.Protos.Authv2";
 
-service AuthService {
+service AuthServiceV2 {
     rpc Authorize(AuthorizeRequest) returns (AuthorizeResult) {}
+    rpc GetUserValidity(GetUserRequest) returns (ValidateResult) {}
     rpc GetUser(GetUserRequest) returns (GetUserResult) {}
+    rpc SearchUser(SearchUserRequest) returns (SearchUserResult) {}
     rpc SendPush(SendPushRequest) returns (SendPushResult) {}
+}
+
+message ValidateResult {
+    bool success = 1;
 }
 
 message AuthorizeRequest {
@@ -17,11 +23,12 @@ message AuthorizeRequest {
 
 message AuthorizeResult {
     bool success = 1;
-    optional int64 userid = 2;
+    optional uint64 userid = 2;
 }
 
+
 message GetUserRequest {
-    int64 userid = 1;
+    uint64 userid = 1;
 }
 
 message Verification {
@@ -31,31 +38,41 @@ message Verification {
     int32 classroom = 4;
     int32 number = 5;
     string valid_until = 6;
-    string graduated_at = 7;
+    optional string graduated_at = 7;
 }
-
 message User {
-    int64 id = 1;
+    uint64 id = 1;
     string phone = 2;
     string name = 3;
     string profile = 5;
     string created_at = 6;
     bool is_suspended = 7;
+    
+    
     optional Verification verification = 8;
+}
+
+message SearchUserRequest {
+    string query = 1;
+}
+
+message SearchUserResult {
+    repeated User users = 1;
 }
 
 message GetUserResult {
     bool success = 1;
     optional User user = 2;
-}
+} 
 
 message SendPushRequest {
     optional int64 userid = 1;
     optional string topic = 2;
-    string title = 3;
-    string body = 4;
-    string image = 5;
-    string link = 6;
+    bool saveinList = 3;
+    string title = 4;
+    string body = 5;
+    string image = 6;
+    string link = 7;
 }
 
 message SendPushResult {

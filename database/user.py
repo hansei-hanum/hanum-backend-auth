@@ -17,10 +17,8 @@ class User(Base):
     id = Column(BIGINT(unsigned=True), primary_key=True, autoincrement=True)
     phone = Column(VARCHAR(11), nullable=False, unique=True)
     name = Column(VARCHAR(5), nullable=False)
-    handle = Column(VARCHAR(12), nullable=True, unique=True)
     profile = Column(VARCHAR(100), nullable=True)
     created_at = Column(DATETIME, nullable=False, server_default=func.now())
-    handle_updated_at = Column(DATETIME, nullable=True)
     verifications: Mapped[List[VerificationKey]] = relationship(back_populates="user")
 
 

@@ -1,5 +1,5 @@
 from auth import AuthService
-from rpc.declaration.auth.auth_pb2 import (
+from rpc.declaration.authv2.authv2_pb2 import (
     AuthorizeResult,
 )
 
