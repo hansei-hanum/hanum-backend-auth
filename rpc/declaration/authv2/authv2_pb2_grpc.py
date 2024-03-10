@@ -15,30 +15,30 @@ class AuthServiceV2Stub(object):
             channel: A grpc.Channel.
         """
         self.Authorize = channel.unary_unary(
-                '/authv2.AuthServiceV2/Authorize',
-                request_serializer=authv2__pb2.AuthorizeRequest.SerializeToString,
-                response_deserializer=authv2__pb2.AuthorizeResult.FromString,
-                )
+            "/authv2.AuthServiceV2/Authorize",
+            request_serializer=authv2__pb2.AuthorizeRequest.SerializeToString,
+            response_deserializer=authv2__pb2.AuthorizeResult.FromString,
+        )
         self.GetUserValidity = channel.unary_unary(
-                '/authv2.AuthServiceV2/GetUserValidity',
-                request_serializer=authv2__pb2.GetUserRequest.SerializeToString,
-                response_deserializer=authv2__pb2.ValidateResult.FromString,
-                )
+            "/authv2.AuthServiceV2/GetUserValidity",
+            request_serializer=authv2__pb2.GetUserRequest.SerializeToString,
+            response_deserializer=authv2__pb2.ValidateResult.FromString,
+        )
         self.GetUser = channel.unary_unary(
-                '/authv2.AuthServiceV2/GetUser',
-                request_serializer=authv2__pb2.GetUserRequest.SerializeToString,
-                response_deserializer=authv2__pb2.GetUserResult.FromString,
-                )
+            "/authv2.AuthServiceV2/GetUser",
+            request_serializer=authv2__pb2.GetUserRequest.SerializeToString,
+            response_deserializer=authv2__pb2.GetUserResult.FromString,
+        )
         self.SearchUser = channel.unary_unary(
-                '/authv2.AuthServiceV2/SearchUser',
-                request_serializer=authv2__pb2.SearchUserRequest.SerializeToString,
-                response_deserializer=authv2__pb2.SearchUserResult.FromString,
-                )
+            "/authv2.AuthServiceV2/SearchUser",
+            request_serializer=authv2__pb2.SearchUserRequest.SerializeToString,
+            response_deserializer=authv2__pb2.SearchUserResult.FromString,
+        )
         self.SendPush = channel.unary_unary(
-                '/authv2.AuthServiceV2/SendPush',
-                request_serializer=authv2__pb2.SendPushRequest.SerializeToString,
-                response_deserializer=authv2__pb2.SendPushResult.FromString,
-                )
+            "/authv2.AuthServiceV2/SendPush",
+            request_serializer=authv2__pb2.SendPushRequest.SerializeToString,
+            response_deserializer=authv2__pb2.SendPushResult.FromString,
+        )
 
 
 class AuthServiceV2Servicer(object):
@@ -47,152 +47,213 @@ class AuthServiceV2Servicer(object):
     def Authorize(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetUserValidity(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SearchUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SendPush(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_AuthServiceV2Servicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Authorize': grpc.unary_unary_rpc_method_handler(
-                    servicer.Authorize,
-                    request_deserializer=authv2__pb2.AuthorizeRequest.FromString,
-                    response_serializer=authv2__pb2.AuthorizeResult.SerializeToString,
-            ),
-            'GetUserValidity': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserValidity,
-                    request_deserializer=authv2__pb2.GetUserRequest.FromString,
-                    response_serializer=authv2__pb2.ValidateResult.SerializeToString,
-            ),
-            'GetUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUser,
-                    request_deserializer=authv2__pb2.GetUserRequest.FromString,
-                    response_serializer=authv2__pb2.GetUserResult.SerializeToString,
-            ),
-            'SearchUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.SearchUser,
-                    request_deserializer=authv2__pb2.SearchUserRequest.FromString,
-                    response_serializer=authv2__pb2.SearchUserResult.SerializeToString,
-            ),
-            'SendPush': grpc.unary_unary_rpc_method_handler(
-                    servicer.SendPush,
-                    request_deserializer=authv2__pb2.SendPushRequest.FromString,
-                    response_serializer=authv2__pb2.SendPushResult.SerializeToString,
-            ),
+        "Authorize": grpc.unary_unary_rpc_method_handler(
+            servicer.Authorize,
+            request_deserializer=authv2__pb2.AuthorizeRequest.FromString,
+            response_serializer=authv2__pb2.AuthorizeResult.SerializeToString,
+        ),
+        "GetUserValidity": grpc.unary_unary_rpc_method_handler(
+            servicer.GetUserValidity,
+            request_deserializer=authv2__pb2.GetUserRequest.FromString,
+            response_serializer=authv2__pb2.ValidateResult.SerializeToString,
+        ),
+        "GetUser": grpc.unary_unary_rpc_method_handler(
+            servicer.GetUser,
+            request_deserializer=authv2__pb2.GetUserRequest.FromString,
+            response_serializer=authv2__pb2.GetUserResult.SerializeToString,
+        ),
+        "SearchUser": grpc.unary_unary_rpc_method_handler(
+            servicer.SearchUser,
+            request_deserializer=authv2__pb2.SearchUserRequest.FromString,
+            response_serializer=authv2__pb2.SearchUserResult.SerializeToString,
+        ),
+        "SendPush": grpc.unary_unary_rpc_method_handler(
+            servicer.SendPush,
+            request_deserializer=authv2__pb2.SendPushRequest.FromString,
+            response_serializer=authv2__pb2.SendPushResult.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'authv2.AuthServiceV2', rpc_method_handlers)
+        "authv2.AuthServiceV2", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class AuthServiceV2(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Authorize(request,
+    def Authorize(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/authv2.AuthServiceV2/Authorize',
+            "/authv2.AuthServiceV2/Authorize",
             authv2__pb2.AuthorizeRequest.SerializeToString,
             authv2__pb2.AuthorizeResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetUserValidity(request,
+    def GetUserValidity(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/authv2.AuthServiceV2/GetUserValidity',
+            "/authv2.AuthServiceV2/GetUserValidity",
             authv2__pb2.GetUserRequest.SerializeToString,
             authv2__pb2.ValidateResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetUser(request,
+    def GetUser(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/authv2.AuthServiceV2/GetUser',
+            "/authv2.AuthServiceV2/GetUser",
             authv2__pb2.GetUserRequest.SerializeToString,
             authv2__pb2.GetUserResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SearchUser(request,
+    def SearchUser(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/authv2.AuthServiceV2/SearchUser',
+            "/authv2.AuthServiceV2/SearchUser",
             authv2__pb2.SearchUserRequest.SerializeToString,
             authv2__pb2.SearchUserResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SendPush(request,
+    def SendPush(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/authv2.AuthServiceV2/SendPush',
+            "/authv2.AuthServiceV2/SendPush",
             authv2__pb2.SendPushRequest.SerializeToString,
             authv2__pb2.SendPushResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

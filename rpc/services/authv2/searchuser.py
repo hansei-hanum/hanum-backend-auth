@@ -1,13 +1,12 @@
-from database import User
-from database import scope
-from sqlalchemy import select
-from services import UserService
-from rpc.declaration.authv2.authv2_pb2 import (
-    SearchUserResult,
-    User as UserMessage,
-    Verification as VerificationMessage,
-)
 import traceback
+
+from sqlalchemy import select
+
+from database import User, scope
+from rpc.declaration.authv2.authv2_pb2 import SearchUserResult
+from rpc.declaration.authv2.authv2_pb2 import User as UserMessage
+from rpc.declaration.authv2.authv2_pb2 import Verification as VerificationMessage
+from services import UserService
 
 
 async def SearchUserInterface(self, request, context):
@@ -18,7 +17,12 @@ async def SearchUserInterface(self, request, context):
             if not query:
                 return SearchUserResult(users=[])
 
-            stmt = select(User.id).where(User.name.like(f"%{query}%"))
+            stmt = (
+                select(User.id)
+                .where(User.name.like(f"%{query}%"))
+                .limit(request.limit)
+                .offset(request.offset)
+            )
             user_ids = [userid for userid in (await sess.execute(stmt)).scalars().all()]
 
             user_list = []
@@ -36,21 +40,23 @@ async def SearchUserInterface(self, request, context):
                             profile=user.profile,
                             created_at=str(user.created_at),
                             is_suspended=(await service.is_suspended()),
-                            verification=VerificationMessage(
-                                type=verification.type,
-                                department=verification.department,
-                                grade=verification.grade,
-                                classroom=verification.classroom,
-                                number=verification.number,
-                                valid_until=str(verification.valid_until),
-                                graduated_at=verification.graduated_at,
-                            )
-                            if verification is not None
-                            else None,
+                            verification=(
+                                VerificationMessage(
+                                    type=verification.type,
+                                    department=verification.department,
+                                    grade=verification.grade,
+                                    classroom=verification.classroom,
+                                    number=verification.number,
+                                    valid_until=str(verification.valid_until),
+                                    graduated_at=verification.graduated_at,
+                                )
+                                if verification is not None
+                                else None
+                            ),
                         )
                     )
 
             return SearchUserResult(users=user_list)
-        
+
     except Exception as e:
         traceback.print_exc()

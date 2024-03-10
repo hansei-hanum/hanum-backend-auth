@@ -54,6 +54,8 @@ message User {
 
 message SearchUserRequest {
     string query = 1;
+    int32 offset = 2;
+    int32 limit = 3;
 }
 
 message SearchUserResult {
