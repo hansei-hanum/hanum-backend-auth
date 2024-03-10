@@ -68,13 +68,15 @@ message GetUserResult {
 } 
 
 message SendPushRequest {
-    optional int64 userid = 1;
-    optional string topic = 2;
+    oneof target {
+        uint64 userid = 1;
+        string topic = 2;
+    }
     bool saveinList = 3;
-    string title = 4;
-    string body = 5;
-    string image = 6;
-    string link = 7;
+    optional string title = 4;
+    optional string body = 5;
+    optional string image = 6;
+    optional string link = 7;
 }
 
 message SendPushResult {
