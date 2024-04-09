@@ -13,7 +13,7 @@ class PhoneAuth:
     async def send(phone: str):
         verification_key = utils.random_number(6)
         await connection.set(phone, verification_key, ex=300)
-        await SMSSender().send(
+        await SMSSender().sendMessage(
             phone, f"[한움] 인증번호는 {verification_key}입니다. 5분 내에 입력해주세요."
         )
 
