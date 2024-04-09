@@ -85,6 +85,7 @@ class SMSSender:
             async with session.post(url, headers=headers, data=data) as response:
                 status_code = response.status
                 text = await response.text()
-                print(status_code)
-                print(text)
-
+                print(f"Response Status: {status_code}")
+                print(f"Response Body: {text}")
+                if status_code != 200:
+                    raise CoolsmsException(status_code, "Failed to send SMS.")
