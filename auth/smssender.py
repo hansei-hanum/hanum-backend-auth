@@ -1,130 +1,65 @@
 import base64
 import hashlib
 import hmac
-from sdk.api.message import Message
-from sdk.exceptions import CoolsmsException
-import time
 import aiohttp
+from datetime import datetime, timezone
+import random
+import string
 from urllib.parse import urlparse
-from env import SENSEnv
-import sys
-
-# class SMSSender:
-#     def __init__(self):
-#         self.access_key = SENSEnv.ACCESS_KEY
-#         self.secret_key = SENSEnv.SECRET_KEY
-#         self.service_id = SENSEnv.SERVICE_ID
-#         self.phone_number = SENSEnv.PHONE_NUMBER
-
-#     def signature(self, method: str, path: str):
-#         timestamp = int(time.time() * 1000)
-#         return timestamp, base64.b64encode(
-#             hmac.new(
-#                 self.secret_key.encode("utf-8"),
-#                 f"{method} {path}\n{timestamp}\n{self.access_key}".encode("utf-8"),
-#                 digestmod=hashlib.sha256,
-#             ).digest()
-#         ).decode("utf-8")
-
-#     async def send(self, to: str, message: str):
-#         url = urlparse(
-#             "https://api.coolsms.co.kr/messages/"
-#             + self.service_id
-#             + "/messages"
-#         )
-#         timestamp, signature = self.signature("POST", url.path)
-
-#         async with aiohttp.ClientSession() as session:
-#             async with session.post(
-#                 url.geturl(),
-#                 headers={
-#                     "Content-Type": "application/json; charset=utf-8",
-#                     "x-ncp-apigw-timestamp": str(timestamp),
-#                     "x-ncp-iam-access-key": self.access_key,
-#                     "x-ncp-apigw-signature-v2": signature,
-#                 },
-#                 json={
-#                     "type": "SMS",
-#                     "from": self.phone_number,
-#                     "content": message,
-#                     "messages": [{"to": to}],
-#                 },
-#             ) as response:
-#                 response.raise_for_status()
-
+from env import SENSEnv  
+from sdk.exceptions import CoolsmsException  
 
 class SMSSender:
     def __init__(self):
-        self.api_access_key = SENSEnv.ACCESS_KEY
+        self.access_key = SENSEnv.ACCESS_KEY
         self.secret_key = SENSEnv.SECRET_KEY
-        self.service_id = SENSEnv.SERVICE_ID
         self.phone_number = SENSEnv.PHONE_NUMBER
-        self.sms_salt = SENSEnv.SMS_SALT
+
+    def generate_salt(self, length=64):
+        return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+    def signature(self, method: str, url_path: str):
+        timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        salt = self.generate_salt()
+        message = f"{timestamp}{salt}"
+
         
+        signature = hmac.new(
+            self.secret_key.encode("utf-8"),  
+            message.encode("utf-8"),          
+            hashlib.sha256                    
+        ).hexdigest()  
 
-    # def signature(self, method: str, path: str):
-    #     timestamp = int(time.time() * 1000)
-    #     return timestamp, base64.b64encode(
-    #         hmac.new(
-    #             self.secret_key.encode("utf-8"),
-    #             f"{method} {path}\n{timestamp}\n{self.access_key}".encode("utf-8"),
-    #             digestmod=hashlib.sha256,
-    #         ).digest()
-    #     ).decode("utf-8")
-    
+        return {
+            "timestamp": timestamp,
+            "salt": salt,
+            "signature": signature
+        }
+
     async def sendMessage(self, to: str, message: str):
-        # url = "http://api.coolsms.co.kr/messages/v4/send"
-        # timestamp = int(time.time() * 1000)
+        url = f"https://api.coolsms.co.kr/messages/v4/send-many/detail"
+        sign_data = self.signature("POST", urlparse(url).path)
 
-        params = dict()
-        params['type'] = 'sms' # Message type ( sms, lms, mms, ata )
-        params['to'] = f'{to}' # Recipients Number '01000000000,01000000001'
-        params['from'] = f'{self.phone_number}' # Sender number
-        params['text'] = f'{message}' # Message
+        headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": f"HMAC-SHA256 apiKey={self.access_key}, date={sign_data['timestamp']}, salt={sign_data['salt']}, signature={sign_data['signature']}"
+        }
 
-        # headers = {
-        #     "Authorization": f"HMAC-SHA256 apiKey={self.access_key}, date={timestamp}, salt={self.sms_salt}, signature={self.signature('POST', url)[1]}",
-        #     "Content-Type": "application/json"
-        # }
-        # data = f'{{"message":{{"to":"{to}","from":"{self.phone_number}","text":"{message}","type":"SMS"}}}}'
-
-        access_key = self.api_access_key
-        secret_key = self.secret_key
-
-        cool = Message(access_key, secret_key)
-
-        try:
-            response = cool.send(params)
-            print("Success Count : %s" % response['success_count'])
-            print("Error Count : %s" % response['error_count'])
-            print("Group ID : %s" % response['group_id'])
-
-            if "error_list" in response:
-                print("Error List : %s" % response['error_list'])
-
-        except CoolsmsException as e:
-            print("Error Code : %s" % e.code)
-            print("Error Message : %s" % e.msg)
-
-        # async with aiohttp.ClientSession() as session:
-        #     async with session.post(url, headers=headers, data=data) as response:
-        #         status_code = response.status
-        #         # text = await response.text()
-        #         text = cool.send(message)
-        #         print(f"Response Status: {status_code}")
-        #         print(f"Response Body: {text}")
-        #         if status_code != 200:
-        #             raise CoolsmsException(status_code, "Failed to send SMS.")
-                
-                # try:
-                #     response = cool.send(message)
-                #     print("Success Count : %s" % response['success_count'])
-                #     print("Error Count : %s" % response['error_count'])
-                #     print("Group ID : %s" % response['group_id'])
-
-                #     if "error_list" in response:
-                #         print("Error List : %s" % response['error_list'])
-
-                # except CoolsmsException as e:
-                #     print("Error Code : %s" % e.code)
-                #     print("Error Message : %s" % e.msg)
+        json_body = {
+            "messages":[
+                {
+                    "type": "SMS",
+                    "from": self.phone_number,
+                    "text": message,
+                    "to": to
+                }
+            ]
+        }
+        
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.post(url, headers=headers, json=json_body) as response:
+                    response_data = await response.text()
+                    return await response.json()
+            except aiohttp.ClientResponseError as e:
+                raise CoolsmsException(f"메세지 전송 실패: {e.message}", e.status)
