@@ -6,7 +6,6 @@ from sdk.exceptions import CoolsmsException
 import time
 import aiohttp
 from urllib.parse import urlparse
-import requests
 from env import SENSEnv
 
 
@@ -73,7 +72,7 @@ class SMSSender:
             ).digest()
         ).decode("utf-8")
     
-    async def send(self, to : str, message : str):
+    async def send(self, to: str, message: str):
         url = "http://api.coolsms.co.kr/messages/v4/send"
         timestamp = int(time.time() * 1000)
         headers = {
@@ -82,6 +81,10 @@ class SMSSender:
         }
         data = f'{{"message":{{"to":"{to}","from":"{self.phone_number}","text":"{message}","type":"SMS"}}}}'
 
-        response = requests.post(url, headers=headers, data=data)
-        print(response.status_code)
-        print(response.text)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, data=data) as response:
+                status_code = response.status
+                text = await response.text()
+                print(status_code)
+                print(text)
+
