@@ -58,6 +58,5 @@ class SMSSender:
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, json=json_body) as response:
                 response.raise_for_status()
-                response_data = await response.text()
                 return await response.json()
             
