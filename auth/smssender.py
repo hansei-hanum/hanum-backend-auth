@@ -7,7 +7,6 @@ import random
 import string
 from urllib.parse import urlparse
 from env import SENSEnv  
-from sdk.exceptions import CoolsmsException  
 
 class SMSSender:
     def __init__(self):
@@ -57,9 +56,8 @@ class SMSSender:
         }
         
         async with aiohttp.ClientSession() as session:
-            try:
-                async with session.post(url, headers=headers, json=json_body) as response:
-                    response_data = await response.text()
-                    return await response.json()
-            except aiohttp.ClientResponseError as e:
-                raise CoolsmsException(f"메세지 전송 실패: {e.message}", e.status)
+            async with session.post(url, headers=headers, json=json_body) as response:
+                response.raise_for_status()
+                response_data = await response.text()
+                return await response.json()
+            
