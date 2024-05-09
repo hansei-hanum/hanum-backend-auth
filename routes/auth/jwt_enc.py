@@ -1,8 +1,5 @@
 from fastapi import APIRouter, Depends
 from depends import RequireAuth
-from dataclasses import dataclass
-from jose import jwt
-from datetime import datetime, timedelta
 
 from utils.tokens import create_access_token
 from services.user import UserService

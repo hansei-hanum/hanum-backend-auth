@@ -1,10 +1,10 @@
-from Env.environ import JwtEnv 
+from env.environ import JWTEnv 
 import jwt
 
 from services.user import UserService
 
-SECRET = JwtEnv.SECRET_KEY
-ALGORITHM = "HS256"
+SECRET = JWTEnv.SECRET_KEY
+ALGORITHM = JWTEnv.ALGORITHM
 
 def check_auth(token):
     try:
