@@ -1,7 +1,7 @@
 from Env.environ import JwtEnv 
 import jwt
 
-from database.DTO.Response import JwtPayloadResponse
+from services.user import UserService
 
 SECRET = JwtEnv.SECRET_KEY
 ALGORITHM = "HS256"
@@ -16,7 +16,7 @@ def check_auth(token):
         return False, "Invalid Token"
     
 
-def create_access_token(user: JwtPayloadResponse):
+def create_access_token(user: UserService):
     payload = {
         "sub": str(user.id),
         "name": user.name,
