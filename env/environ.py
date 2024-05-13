@@ -26,6 +26,10 @@ class Env:
     TEST_PHONE_NUMBERS = os.environ.get("TEST_PHONE_NUMBERS", "").split(",")
 
 
+class AuthEnv:
+    EXTERNAL_SERVICE_JWT_SECRET = os.environ.get("EXTERNAL_SERVICE_JWT_SECRET")
+
+
 class DatabaseEnv:
     HOST = os.environ.get("DATABASE_HOST")
     PORT = int(os.environ.get("DATABASE_PORT"))
