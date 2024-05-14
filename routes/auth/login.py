@@ -35,9 +35,7 @@ async def login(request: LoginRequest):
                 {
                     "id": user.id,
                     "name": user.name,
-                    "validationString": utils.get_userinfo_string(
-                        await service.get_verification()
-                    ),
+                    "validationString": "Unknown",
                 },
                 (AuthEnv.EXTERNAL_SERVICE_JWT_SECRET + request.type),
             )
