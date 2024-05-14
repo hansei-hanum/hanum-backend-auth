@@ -21,12 +21,12 @@ class PhoneRequest(BaseModel):
 
 @router.post("/", dependencies=[Depends(RateLimiter(times=5, minutes=30))])
 async def request_phone(request: PhoneRequest):
-    if Env.DEBUG or request.phone in Env.TEST_PHONE_NUMBERS:
-        return {"message": "SUCCESS", "data": None}
+    # if Env.DEBUG or request.phone in Env.TEST_PHONE_NUMBERS:
+    #     return {"message": "SUCCESS", "data": None}
 
-    try:
-        await PhoneAuth.send(request.phone)
-    except:
-        raise HTTPException(status_code=500, detail="EXTERNAL_API_EXCEPTION")
+    # try:
+    #     await PhoneAuth.send(request.phone)
+    # except:
+    #     raise HTTPException(status_code=500, detail="EXTERNAL_API_EXCEPTION")
 
     return {"message": "SUCCESS", "data": None}
