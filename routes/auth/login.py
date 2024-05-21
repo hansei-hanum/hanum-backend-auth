@@ -30,17 +30,6 @@ async def login(request: LoginRequest):
         if not user:
             raise HTTPException(status_code=404, detail="USER_NOT_FOUND")
 
-        if request.type == "sports":
-            token = jwt.encode(
-                {
-                    "id": user.id,
-                    "name": user.name,
-                    "validationString": "Unknown",
-                },
-                (AuthEnv.EXTERNAL_SERVICE_JWT_SECRET + request.type),
-            )
-            return {"message": "SUCCESS", "data": token}
-
         if not (Env.DEBUG or request.phone in Env.TEST_PHONE_NUMBERS):
             if not (await PhoneAuth.verify(request.phone, request.code)):
                 raise HTTPException(status_code=401, detail="INVALID_VERIFICATION_CODE")
