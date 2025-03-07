@@ -26,7 +26,7 @@ class VerificationKey(Base):
             "HACKING_SECURITY",
             "METAVERSE_GAME",
             "GAME",
-            "INTELIGENT_SOFTWARE",
+            "INTELLIGENT_SOFTWARE",
         ),
         nullable=True,
     )
