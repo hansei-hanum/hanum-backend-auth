@@ -4,6 +4,7 @@ CLASS_BINDING = {
     "HACKING_SECURITY": "H",
     "METAVERSE_GAME": "M",
     "GAME": "G",
+    "INTELLIGENT_SOFTWARE": "I",
 }
 
 

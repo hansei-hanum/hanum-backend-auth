@@ -18,6 +18,7 @@ class UserVerification(NamedTuple):
             "HACKING_SECURITY",
             "METAVERSE_GAME",
             "GAME",
+            "INTELLIGENT_SOFTWARE",
         ]
         | None
     ) = None
