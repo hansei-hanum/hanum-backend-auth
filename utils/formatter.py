@@ -6,6 +6,7 @@ department_map = {
     "NETWORK_SECURITY": "네트워크보안과",
     "HACKING_SECURITY": "해킹보안과",
     "METAVERSE_GAME": "메타버스게임과",
+    "INTELLIGENT_SOFTWARE": "지능형소프트웨어과",
     "GAME": "게임과",
 }
 
