@@ -55,6 +55,9 @@ class SENSEnv:
     SERVICE_ID = os.environ.get("SENS_SERVICE_ID")
     PHONE_NUMBER = os.environ.get("SENS_PHONE_NUMBER")
 
+class JWTEnv:
+    SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+    ALGORITHM = os.environ.get("JWT_ALGORITHM")
 
 # class RedisEnv:
 #     HOST = REDIS_ENV.get("HOST")
